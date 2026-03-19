@@ -1,0 +1,4 @@
+[project]
+dependencies = [
+    "websockets>=16.0"
+]
