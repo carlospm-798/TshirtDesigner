@@ -60,30 +60,23 @@ body {
     justify-content: center;
 }
 
-.btn_generate_lobby {
+.btn_lobby {
     margin: 1% 20%;
     font-size: 400%;
-    color: var(--third-color);
-    background-color: var(--primary-color);
+    font-weight: 600;
+    font-style: italic;
+    color: var(--primary-color);
+    background-color: var(--third-color);
 
     align-items: center;
-    border: 5px solid var(--primary-color);
     border-radius: 30px;
 
     cursor: pointer;
-}
 
-.btn_enter_lobby {
-    margin: 1% 20% 10%;
-    font-size: 400%;
-    color: var(--third-color);
-    background-color: var(--primary-color);
-
-    align-items: center;
     border: 5px solid var(--primary-color);
-    border-radius: 30px;
+    border-radius: 50px;
 
-    cursor: pointer;
+    text-shadow: 4px 4px var(--background-color);
 }
 
 .lobby_footer {
@@ -100,7 +93,7 @@ body {
     color: var(--third-color);
 
     text-shadow: 3px 0 var(--primary-color);
-    margin: 1% 10% 5%;
+    margin: 10% 10% 5%;
     border: 5px solid var(--primary-color);
     border-radius: 70px;
     background-color: var(--background-color);
