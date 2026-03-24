@@ -13,6 +13,7 @@
 body {
     background-color: var(--third-color);
     color: var(--primary-color);
+    padding: 1%;
 }
 
 .index_header {
@@ -97,6 +98,24 @@ body {
     border: 5px solid var(--primary-color);
     border-radius: 70px;
     background-color: var(--background-color);
+}
+
+.contact_data {
+    font-size: 200%;
+    margin: 1% 10%;
+}
+
+.external_links {
+    font-size: 200%;
+    font-weight: 600;
+    text-decoration: none;
+    border: 2px solid var(--primary-color);
+    border-radius: 20px;
+    margin: 1% 10% 1%;
+    display: block;
+    text-align: center;
+    background-color: var(--background-color);
+    color: var(--third-color);
 }
 /*
     MAIN PALETS COLORS
