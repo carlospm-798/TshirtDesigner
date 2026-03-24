@@ -8,3 +8,18 @@ create_lobby_btn.onclick = function() {
 enter_lobby_btn.onclick = function () {
   console.log('entering to a lobby...')
 }
+
+async function startLobbyCreation() {
+  try {
+    const response = await fetch('http://localhost:5000/api/create_lobby');
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    console.log(data.message);
+  } catch (error) {
+    console.error('There was a problem with the fetch operation', error);
+  }
+}
+
+startLobbyCreation();
