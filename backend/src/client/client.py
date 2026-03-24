@@ -18,4 +18,7 @@ def create_lobby():
     return jsonify(data)
 
 if __name__ == '__main__':
-    app.run(port=5000)
+    #   --------------------------------------      #
+    #   Starting client as a public local host      #
+    #   --------------------------------------      #
+    app.run(host='0.0.0.0', port=5000, debug=True)
