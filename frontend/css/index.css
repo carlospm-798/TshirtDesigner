@@ -58,6 +58,14 @@ body {
 
     background-image: url('../assets/background_image.png');
     opacity: 100%;
+
+    background-repeat: repeat-x;
+    animation: moveBackground 45s linear infinite;
+}
+
+@keyframes moveBackground {
+    from { background-position: 0 0; }
+    to {background-position: -100% 0; }
 }
 
 /*  ----------------------------------------------------------------    #
