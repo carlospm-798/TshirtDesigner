@@ -1,14 +1,17 @@
-var create_lobby_btn = document.getElementById("generate_lobby")
-var enter_lobby_btn = document.getElementById("enter_lobby")
+var create_lobby_btn  = document.getElementById("generate_lobby")
+var enter_lobby_btn   = document.getElementById("enter_lobby")
+var main_window       = document.getElementById("main_window")
 
 create_lobby_btn.onclick = function() {
   console.log('creating lobby...')
   startLobbyCreation();
+  main_window.style.display = 'none';
 }
 
 enter_lobby_btn.onclick = function () {
   console.log('entering to a lobby...')
   enterLobby();
+  main_window.style.display = 'none';
 }
 
 async function startLobbyCreation() {
