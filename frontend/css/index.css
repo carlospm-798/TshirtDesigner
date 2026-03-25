@@ -63,16 +63,79 @@ body {
 #   ----------------------------------------------------------------   */
 .index_header {
     /*This is the main header div class*/
-    color:  var(--pal-first-color);
+    text-align: center;
+    align-items: center;
 }
 
 .btn_lobby_group {
     /*This is the first two buttons class to start/enter lobby*/
-    color:  var(--pal-first-color);
+    position: fixed;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    align-items: center;
+    /*Generate a column of buttoms*/
+    display: flex;
+    flex-direction: row;
+}
+
+.btn_lobby {
+    cursor: pointer;
 }
 
 .lobby_footer {
     /*This is the foother class of all the web page*/
-    color:  var(--pal-first-color);
+    position: fixed;
+    top: 75%;
+    right: 2%;
+
+    background: linear-gradient(to left bottom, var(--surf-second-color), var(--surf-first-color));
+    padding: 2%;
+
+}
+
+/*  ----------------------------------------------------------------    #
+#   THIS SECOND PART SEPARATES THE ELEMENT CLASSES TO KEEP A BETTER     #
+#   ORDER TO UNDERSTAND THE COMPOSE OF THE MAIN WEB PAGE TO ENTER/      #
+#   START A LOBBY. NEXT PARTS WOULD BE SEPARATE SIMILAR TO THIS WAY.    #
+#   ----------------------------------------------------------------   */
+.main_header {
+    /*This is the main header of the first page, with the game title*/
+    /*font color configuration*/
+    color:  var(--pal-fourth-color);
+    /*font configurations*/
+    font-weight: 600;
+    font-size: 400%;
+    font-style: bolder;
+    /*display configurations*/
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.general_description {
+    /*This is the introduction paragraph of my project*/
+    /*font color configuration*/
+    color:  var(--info-first-color);
+    /*display configurations*/
+    position: fixed;
+    bottom: 5%;
+    left:  3%;
+}
+
+.lobby_p_footer {
+    color:  var(--pal-sexth-color);
+    margin: 0%;
+}
+
+.contact_data {
+    color:  var(--pal-third-color);
+    margin: 0%;
+}
+
+.external_links {
+    color: var(--suc-second-color);
 }
 /*  ----------------------------------------------------------------   */
