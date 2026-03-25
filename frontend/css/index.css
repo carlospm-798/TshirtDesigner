@@ -54,6 +54,10 @@ body {
     /*This class is the main body of all the web page*/
     background-color: var(--surf-first-color);
     background-size: cover;
+    background: linear-gradient(to left bottom, var(--surf-second-color), var(--surf-first-color));
+
+    background-image: url('../assets/background_image.png');
+    opacity: 100%;
 }
 
 /*  ----------------------------------------------------------------    #
@@ -87,11 +91,13 @@ body {
     /*This is the foother class of all the web page*/
     position: fixed;
     top: 75%;
-    right: 2%;
+    right: 0;
 
-    background: linear-gradient(to left bottom, var(--surf-second-color), var(--surf-first-color));
+    background: linear-gradient(to left bottom, var(--surf-first-color), var(--surf-second-color));
     padding: 2%;
 
+    border-radius: 15% 0% 0% 0%;
+    opacity: 90%;
 }
 
 /*  ----------------------------------------------------------------    #
@@ -104,15 +110,18 @@ body {
     /*font color configuration*/
     color:  var(--pal-fourth-color);
     /*font configurations*/
-    font-weight: 600;
+    font-weight: 700;
     font-size: 400%;
     font-style: bolder;
+    text-shadow: 10px 5px var(--surf-first-color);
     /*display configurations*/
     position: fixed;
-    top: 40%;
+    top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
+    margin: 0;
+    /*Box shadow*/
 }
 
 .general_description {
@@ -132,10 +141,26 @@ body {
 
 .contact_data {
     color:  var(--pal-third-color);
-    margin: 0%;
+    margin-top: 0%;
 }
 
 .external_links {
     color: var(--suc-second-color);
+}
+
+.social-icon {
+    align-items: center;
+    color: var(--pal-sexth-color);
+    opacity: 80%;
+    margin-right: 2%;
+}
+
+.social_text {
+    color: var(--pal-sexth-color);
+    opacity: 80%;
+    text-decoration: none;
+    margin-right: 2%;
+    display: flex;
+    align-items: center;
 }
 /*  ----------------------------------------------------------------   */
