@@ -1,43 +1,94 @@
-/*  ---------------------------------------------------   #
-#   The TShirt-Designer game, by Carlos Paredes Márquez   #
-#   ---------------------------------------------------   */
 document.addEventListener("DOMContentLoaded", () => {
-  //  These are the main global id to implement the game actions      //
-  var create_lobby_btn  = document.getElementById("generate_lobby")
-  var enter_lobby_btn   = document.getElementById("enter_lobby")
-  var main_window       = document.getElementById("main_window")
-  var lobby             = document.getElementById("lobby")
-  //  -------------------------------------------------------------   //
 
+  // Botones principales
+  const create_lobby_btn = document.getElementById("generate_lobby");
+  const enter_lobby_btn  = document.getElementById("enter_lobby");
 
-  //  These are the main functions to implement the game actions    //
-  create_lobby_btn.onclick = function () {
-    //  This function starts a new lobby and hide the main
-    //  Interface of the web page, except the body
-    console.log('creating lobby...')
-    show_screan(lobby);
-  }
-  //  ----------------------------------------------------------    //
+  // Screens
+  const main_window = document.getElementById("main_window");
+  const lobby       = document.getElementById("lobby");
 
+  // Formulario
+  const form = document.querySelector(".input_form_class");
+  const users_form = document.querySelector(".users_form");
 
+  // Inputs
+  const uname = document.getElementById("uname");
+  const lcode = document.getElementById("lcode");
+  const enter_data_btn = document.getElementById("input_username_btn");
 
-  enter_lobby_btn.onclick = function () {
-    //  This function enter to a lobby and hide the main
-    //  Interface of the web page, except the body
-    console.log('entering to a lobby...')
-    show_screan(lobby);
-  }
-  //  ----------------------------------------------------------    //
+  let lobbyMode = null;
 
+  /* ---------------- SCREEN MANAGER ---------------- */
 
-
-  function show_screan(screen) {
-    //  This function hidde all the windows and show
-    //  then the screen that we indicate
+  function show_screen(screen) {
     main_window.classList.add("hidden");
     lobby.classList.add("hidden");
-
     screen.classList.remove("hidden");
   }
+
+  /* ---------------- BOTONES INICIO ---------------- */
+
+  create_lobby_btn.onclick = () => {
+    console.log("creating lobby...");
+    lobbyMode = "create";
+    show_screen(lobby);
+    lcode.value = "----";
+    lcode.disabled = true;
+  };
+
+  enter_lobby_btn.onclick = () => {
+    console.log("entering lobby...");
+    lobbyMode = "join";
+    show_screen(lobby);
+    lcode.value = "";
+    lcode.disabled = false;
+  };
+
+  /* ---------------- VALIDACIÓN ---------------- */
+
+  function validate_inputs() {
+    if (lobbyMode === "create") {
+      enter_data_btn.disabled = !uname.value.trim();
+    } else {
+      enter_data_btn.disabled = !(
+        uname.value.trim() &&
+        lcode.value.trim().length === 4
+      );
+    }
+  }
+
+  uname.addEventListener("input", validate_inputs);
+  lcode.addEventListener("input", validate_inputs);
+
+  /* ---------------- SUBMIT ---------------- */
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const username = uname.value.trim();
+
+    if (username.includes(" ")) {
+      alert("Username cannot contain spaces");
+      return;
+    }
+
+    if (lobbyMode === "create") {
+      console.log("Creating lobby for:", username);
+    }
+
+    if (lobbyMode === "join") {
+      const code = lcode.value.trim().toUpperCase();
+
+      if (code.length !== 4) {
+        alert("Invalid lobby code");
+        return;
+      }
+
+      console.log("Joining lobby:", code, username);
+    }
+
+    users_form.classList.add("hidden");
+  });
 
 });
