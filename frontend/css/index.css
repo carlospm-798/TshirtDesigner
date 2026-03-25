@@ -127,12 +127,10 @@ body {
     position: fixed;
     top: 65%;
     right: 1%;
-
     background: rgba(40, 40, 40, 0.5);
     padding: 2%;
     border-radius: 40px 0 40px 40px;
     opacity: 90%;
-
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 }
@@ -225,3 +223,74 @@ body {
     display: none;
 }
 /*  ----------------------------------------------------------------   */
+
+
+
+.lobby_header {
+    /*This is the main header of the first page, with the game title*/
+    /*font color configuration*/
+    color:  var(--pal-fourth-color);
+    /*font configurations*/
+    font-weight: 700;
+    font-size: 400%;
+    font-style: bolder;
+    text-shadow: 10px 5px var(--surf-first-color);
+    /*display configurations*/
+    position: fixed;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    margin: 0;
+    /*Box shadow*/
+}
+
+.input_form_class {
+    display: flex;
+    flex-direction: column;
+}
+
+.users_form {
+    color: var(--pal-sexth-color);
+    font-size: 200%;
+    font-weight: 600;
+    position: fixed;
+    top: 40%;
+    left: 10%;
+
+    background: rgba(40, 40, 40, 0.5);
+    padding: 5%;
+    border-radius: 40px 0 40px 40px;
+    opacity: 90%;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.input_username {
+    background-color: var(--surf-first-color);
+    width: 300px;
+    height: 30px;
+    border-radius: 15px;
+    color: var(--pal-first-color);
+    text-align: left;
+    padding: 5%;
+    font-size: 60%;
+    margin: 20px 0;
+}
+
+.input_username_btn {
+    cursor: pointer;
+    width: 340px;
+    padding: 10px 0;
+    background: rgba(40, 40, 40, 0.35);
+    border-radius: 20px;
+    color: var(--pal-first-color);
+    font-size: 90%;
+    font-weight: 800;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow:
+        0 0 10px rgba(255, 255, 255, 0.04),
+        0 0 18px rgba(255, 255, 255, 0.025);
+    transition: 0.3s ease;
+}
