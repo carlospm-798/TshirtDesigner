@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("Joining lobby:", code, username);
     }
 
-    users_form.classList.add("hidden");
+    enter_data_btn.disabled = true;
   });
 
 });
