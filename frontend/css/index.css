@@ -1,129 +1,78 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 :root {
-    --primary-color:    #F5E8D8;
-    --secondary-color:  #FF4500;
-    --third-color:      #FF6F61;
-    --fourth-color:     #DAA520;
-    --background-color: #1C1C1C;
+    /*  SURFACE COLORS FOR THE PAGE     */
+    --surf-first-color:      #121212;
+    --surf-second-color:     #282828;
+    --surf-third-color:      #3f3f3f;
+    --surf-fourth-color:     #575757;
+    --surf-fifth-color:      #717171;
+    --surf-sexth-color:      #8b8b8b;
+
+    /*  PRIMARY PALETTE FOR THE PAGE    */
+    --pal-first-color:      #f7f6f9;
+    --pal-second-color:     #f6f4f8;
+    --pal-third-color:      #f4f2f6;
+    --pal-fourth-color:     #f2eff5;
+    --pal-fifth-color:      #f0edf3;
+    --pal-sexth-color:      #eeebf2;
+
+    /*  SUCCES COLOR FOR THE PAGE       */
+    --suc-first-color:      #9ae8ce;
+    --suc-second-color:     #47d5a6;
+    --suc-third-color:      #22946e;
+
+    /*  WARNING COLOR FOR THE PAGE      */
+    --war-first-color:      #ecd7b2;
+    --war-second-color:     #d7ac61;
+    --war-third-color:      #a87a2a;
+
+    /*  DANGER COLOR FOR THE PAGE       */
+    --dan-first-color:      #eb9e9e;
+    --dan-second-color:     #d94a4a;
+    --dan-third-color:      #9c2121;
+
+    /*  INFO COLOR FOR THE PAGE         */
+    --info-first-color:     #92b2e5;
+    --info-second-color:    #4077d1;
+    --info-third-color:     #21498a;
 
     font-family: "Poppins", sans-serif;
 }
 
+/*  ---------------------------------------------------------------     #
+#   THIS PART SEPARATES THE MAIN BODY AND HTML FILES FROM THE OTHER     #
+#   MODIFICATIONS, TO KEEP AN UNIQUE COLOR ALL ABOVE THE WEB PAGE.      #
+#   ---------------------------------------------------------------    */
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 body {
-    background-color: var(--third-color);
-    color: var(--primary-color);
-    padding: 1%;
+    /*This class is the main body of all the web page*/
+    background-color: var(--surf-first-color);
+    background-size: cover;
 }
 
+/*  ----------------------------------------------------------------    #
+#   THIS FIRST PART SEPARATES THE DIV CLASSES TO KEEP A BETTER ORDER    #
+#   TO UNDERSTAND THE COMPOSE OF THE MAIN WEB PAGE TO ENTER/START A     #
+#   LOBBY. NEXT PARTS WOULD BE SEPARATE SIMILAR TO THIS WAY.            #
+#   ----------------------------------------------------------------   */
 .index_header {
-    text-align: center;
-    align-items: center;
-    padding: 4%;
-    background-color: var(--background-color);
-}
-
-.index_description {
-    text-align: center;
-    align-items: center;
-    padding: 5%;
-    background-color: var(--background-color);
-}
-
-.main_header {
-    color: var(--primary-color);
-    font-weight: 900;
-    font-style: italic;
-    font-size: 600%;
-    /*Font decorations*/
-    text-decoration: underline overline;
-    text-decoration-thickness: 10%;
-    /*horizontal, vertical, blur*/
-    text-shadow: 6px 6px var(--background-color);
-    padding: 30px;
-    border: 5px solid var(--primary-color);
-    border-radius: 70px;
-    background-color: var(--third-color);
-}
-
-.general_description {
-    color: var(--secondary-color);
-    font-size: 200%;
-    border-radius: 30px 30px 30px 30px;
-    border: 5px solid var(--primary-color);
-    background-color: var(--background-color);
+    /*This is the main header div class*/
+    color:  var(--pal-first-color);
 }
 
 .btn_lobby_group {
-    background-color: var(--background-color);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.btn_lobby {
-    margin: 1% 20%;
-    font-size: 400%;
-    font-weight: 600;
-    font-style: italic;
-    color: var(--primary-color);
-    background-color: var(--third-color);
-
-    align-items: center;
-    border-radius: 30px;
-
-    cursor: pointer;
-
-    border: 5px solid var(--primary-color);
-    border-radius: 50px;
-
-    text-shadow: 4px 4px var(--background-color);
+    /*This is the first two buttons class to start/enter lobby*/
+    color:  var(--pal-first-color);
 }
 
 .lobby_footer {
-    align-content: center;
-    background-color: var(--background-color);
+    /*This is the foother class of all the web page*/
+    color:  var(--pal-first-color);
 }
-
-.lobby_p_footer {
-    font-size: 400%;
-    font-weight: 600;
-    font-style: italic;
-    align-items: center;
-    text-align: center;
-    color: var(--third-color);
-
-    text-shadow: 3px 0 var(--primary-color);
-    margin: 10% 10% 5%;
-    border: 5px solid var(--primary-color);
-    border-radius: 70px;
-    background-color: var(--background-color);
-}
-
-.contact_data {
-    font-size: 200%;
-    margin: 1% 10%;
-}
-
-.external_links {
-    font-size: 200%;
-    font-weight: 600;
-    text-decoration: none;
-    border: 2px solid var(--primary-color);
-    border-radius: 20px;
-    margin: 1% 10% 1%;
-    display: block;
-    text-align: center;
-    background-color: var(--background-color);
-    color: var(--third-color);
-}
-/*
-    MAIN PALETS COLORS
-        kind of:
-
-        Black       #1C1C1C
-        White       #F5E8D8
-        Pink        #FF6F61
-        Mustard     #DAA520
-        Orange      #FF4500
-*/
+/*  ----------------------------------------------------------------   */
