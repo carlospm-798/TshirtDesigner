@@ -213,4 +213,15 @@ body {
     opacity: 1;
 }
 
+
+
+/*  ----------------------------------------------------------------    #
+#   THIS THIRD PART SEPARATES THE ELEMENT CLASSES TO KEEP A BETTER      #
+#   ORDER TO UNDERSTAND THE COMPOSE OF THE MAIN WEB PAGE TO ENTER/      #
+#   START A LOBBY. NEXT PARTS WOULD BE SEPARATE SIMILAR TO THIS WAY.    #
+#   ----------------------------------------------------------------   */
+
+.hidden {
+    display: none;
+}
 /*  ----------------------------------------------------------------   */
