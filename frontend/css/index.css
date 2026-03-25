@@ -81,6 +81,7 @@ body {
     /*Generate a column of buttoms*/
     display: flex;
     flex-direction: row;
+    /*Disposition of the buttons*/
 }
 
 .btn_lobby {
@@ -90,13 +91,13 @@ body {
 .lobby_footer {
     /*This is the foother class of all the web page*/
     position: fixed;
-    top: 75%;
-    right: 0;
+    top: 68%;
+    right: 1%;
 
     background: linear-gradient(to left bottom, var(--surf-first-color), var(--surf-second-color));
     padding: 2%;
 
-    border-radius: 15% 0% 0% 0%;
+    border-radius: 40px 10px 40px 10px;
     opacity: 90%;
 }
 
@@ -151,7 +152,7 @@ body {
 .social-icon {
     align-items: center;
     color: var(--pal-sexth-color);
-    opacity: 80%;
+    opacity: 100%;
     margin-right: 2%;
 }
 
