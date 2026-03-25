@@ -17,6 +17,11 @@ def create_lobby():
     data = {"message": "Hello from Python backend! Lobby creation."}
     return jsonify(data)
 
+@app.route('/api/enter_lobby', methods=['GET'])
+def enter_lobby():
+    data = {"message": "Hello from Python backend! Enter to Lobby."}
+    return jsonify(data)
+
 if __name__ == '__main__':
     #   --------------------------------------      #
     #   Starting client as a public local host      #
