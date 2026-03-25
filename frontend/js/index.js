@@ -18,9 +18,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const enter_data_btn = document.getElementById("input_username_btn");
 
   let lobbyMode = null;
+  //  -----------------------------------------------------------------   //
+
+
 
   /* ---------------- SCREEN MANAGER ---------------- */
-
   function show_screen(screen) {
     main_window.classList.add("hidden");
     lobby.classList.add("hidden");
@@ -28,7 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ---------------- BOTONES INICIO ---------------- */
-
   create_lobby_btn.onclick = () => {
     console.log("creating lobby...");
     lobbyMode = "create";
@@ -46,7 +47,6 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   /* ---------------- VALIDACIÓN ---------------- */
-
   function validate_inputs() {
     if (lobbyMode === "create") {
       enter_data_btn.disabled = !uname.value.trim();
@@ -62,7 +62,6 @@ document.addEventListener("DOMContentLoaded", () => {
   lcode.addEventListener("input", validate_inputs);
 
   /* ---------------- SUBMIT ---------------- */
-
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -90,5 +89,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     enter_data_btn.disabled = true;
   });
+
+  /*  ------------ APPEND CHILD ------------  */
+  //  Here will be the usersList.appendChild(li); method to add new users and host
+
+
 
 });

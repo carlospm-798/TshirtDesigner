@@ -293,3 +293,24 @@ body {
         0 0 18px rgba(255, 255, 255, 0.025);
     transition: 0.3s ease;
 }
+
+.users_in_lobby {
+    color: var(--pal-sexth-color);
+    font-size: 150%;
+    font-weight: 600;
+    position: fixed;
+    top: 25%;
+    right: 0%;
+
+    width: 800px;
+    height: 480px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    background: rgba(40, 40, 40, 0.5);
+    padding: 5%;
+    border-radius: 40px 0px 0px 0px;
+    opacity: 90%;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
