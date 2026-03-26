@@ -1,67 +1,61 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-from .lobby_manager import create_lobby, join_lobby, lobbies
-from dotenv import load_dotenv
-import os
+from fastapi.middleware.cors import CORSMiddleware
+from pathlib import Path
 
 app = FastAPI()
-app.mount(
-    "/",
-    StaticFiles(directory="../frontend", html=True),
-    name="frontend"
-)
 
-load_dotenv()
-
-IP = os.getenv("IP_DIRECTION")
-PORT = os.getenv("PORT", "8000")
-
-
+# --- CORS (útil para dev) ---
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_methods=["*"],
-    allow_headers=["*"]
+    allow_headers=["*"],
 )
 
-@app.post("/create-lobby")
-async def create(data: dict):
-    lobby, player_id = create_lobby(data["username"])
+# --- Paths ---
+BASE_DIR = Path(__file__).resolve().parent.parent
+FRONTEND_DIR = BASE_DIR / "../frontend"
+
+app.mount(
+    "/css",
+    StaticFiles(directory=FRONTEND_DIR / "css"),
+    name="css"
+)
+
+app.mount(
+    "/js",
+    StaticFiles(directory=FRONTEND_DIR / "js"),
+    name="js"
+)
+
+app.mount(
+    "/static",
+    StaticFiles(directory=FRONTEND_DIR),
+    name="static"
+)
+
+
+@app.get("/")
+async def index():
+    return FileResponse(FRONTEND_DIR / "index.html")
+
+
+@app.get("/config")
+async def config():
     return {
-        "lobby_code": lobby.code,
-        "player_id": player_id
+        "api_url": "http://localhost:8000",
+        "ws_url": "ws://localhost:8000"
     }
 
-@app.post("/join-lobby")
-async def join(data: dict):
-    lobby, player_id = join_lobby(data["code"], data["username"])
-    if not lobby:
-        return {"error": "Lobby not found"}
-
-    return {
-        "player_id": player_id
-    }
 
 @app.websocket("/ws/{code}")
-async def websocket_endpoint(ws: WebSocket, code: str):
+async def websocket(ws: WebSocket, code: str):
     await ws.accept()
-
     try:
         while True:
             data = await ws.receive_text()
-            await ws.send_json({
-                "players": [
-                    {"name": p.name, "is_host": p.is_host}
-                    for p in lobbies[code].players.values()
-                ]
-            })
+            await ws.send_text(f"Echo from lobby {code}")
     except WebSocketDisconnect:
-        print("Client diconnected")
-
-@app.get("/config")
-async def get_config():
-    return {
-        "ws_url": f"ws://{IP}:{PORT}",
-        "api_url":  f"http://{IP}:{PORT}"
-    }
+        print("Client disconnected")
