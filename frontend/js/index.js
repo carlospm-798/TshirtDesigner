@@ -1,4 +1,6 @@
-document.addEventListener("DOMContentLoaded", () => {
+import { connectToLobby } from "./socket.js";
+
+document.addEventListener("DOMContentLoaded", async () => {
 
   // Botones principales
   const create_lobby_btn = document.getElementById("generate_lobby");
@@ -18,32 +20,36 @@ document.addEventListener("DOMContentLoaded", () => {
   const enter_data_btn = document.getElementById("input_username_btn");
 
   let lobbyMode = null;
-  //  -----------------------------------------------------------------   //
+  let API_URL = "";
+  let WS_URL = "";
 
+  /* --------- LOAD CONFIG FIRST --------- */
+  const cfg = await fetch("/config").then(res => res.json());
+  API_URL = cfg.api_url;
+  WS_URL = cfg.ws_url;
+  // Fake IP's to test with live-server
+  /*API_URL = "http://192.168.1.X:8000";
+  WS_URL  = "ws://192.168.1.X:8000";*/
 
-
-  /* ---------------- SCREEN MANAGER ---------------- */
+  /* --------- SCREEN MANAGER --------- */
   function show_screen(screen) {
     main_window.classList.add("hidden");
     lobby.classList.add("hidden");
     screen.classList.remove("hidden");
   }
 
-  /* ---------------- BOTONES INICIO ---------------- */
   create_lobby_btn.onclick = () => {
-    console.log("creating lobby...");
     lobbyMode = "create";
     show_screen(lobby);
-    lcode.value = "----";
     lcode.disabled = true;
+    lcode.value = "----";
   };
 
   enter_lobby_btn.onclick = () => {
-    console.log("entering lobby...");
     lobbyMode = "join";
     show_screen(lobby);
-    lcode.value = "";
     lcode.disabled = false;
+    lcode.value = "";
   };
 
   /* ---------------- VALIDACIÓN ---------------- */
@@ -61,38 +67,47 @@ document.addEventListener("DOMContentLoaded", () => {
   uname.addEventListener("input", validate_inputs);
   lcode.addEventListener("input", validate_inputs);
 
-  /* ---------------- SUBMIT ---------------- */
-  form.addEventListener("submit", (e) => {
+  /* --------- SUBMIT --------- */
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const username = uname.value.trim();
-
-    if (username.includes(" ")) {
-      alert("Username cannot contain spaces");
+    if (!username || username.includes(" ")) {
+      alert("Invalid username");
       return;
     }
 
+    let response;
+    let lobbyCode;
+
     if (lobbyMode === "create") {
-      console.log("Creating lobby for:", username);
+      response = await fetch(`${API_URL}/create-lobby`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username })
+      });
+
+      const data = await response.json();
+      lobbyCode = data.lobby_code;
     }
 
     if (lobbyMode === "join") {
-      const code = lcode.value.trim().toUpperCase();
+      lobbyCode = lcode.value.trim().toUpperCase();
 
-      if (code.length !== 4) {
-        alert("Invalid lobby code");
-        return;
-      }
-
-      console.log("Joining lobby:", code, username);
+      response = await fetch(`${API_URL}/join-lobby`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, code: lobbyCode })
+      });
     }
 
-    enter_data_btn.disabled = true;
+    connectToLobby(WS_URL, lobbyCode, updateUsersList);
   });
 
-  /*  ------------ APPEND CHILD ------------  */
-  //  Here will be the usersList.appendChild(li); method to add new users and host
-
-
+  /* --------- UI UPDATE --------- */
+  function updateUsersList(players) {
+    console.log("Players:", players);
+    // aquí va tu usersList.appendChild(...)
+  }
 
 });
