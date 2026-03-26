@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     players.forEach(player => {
       const li = document.createElement("li");
-      li.textContent = player.is_host ? `Your the fkin HOST:    ${player.name}` : player.name;
+      li.textContent = player.is_host ? `HOST ->    :${player.name}` : player.name;
 
       users_list.appendChild(li);
     });
