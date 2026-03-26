@@ -92,16 +92,6 @@ async def config():
     }
 
 
-@app.websocket("/ws/{code}")
-async def websocket(ws: WebSocket, code: str):
-    await ws.accept()
-    try:
-        while True:
-            data = await ws.receive_text()
-            await ws.send_text(f"Echo from lobby {code}")
-    except WebSocketDisconnect:
-        print("Client disconnected")
-
 
 @app.websocket("/ws/{code}")
 async def websocket_lobby(ws: WebSocket, code: str):

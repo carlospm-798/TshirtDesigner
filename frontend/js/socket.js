@@ -12,7 +12,8 @@ export function connectToLobby(wsUrl, lobbyCode, onPlayersUpdate) {
 
     const data = JSON.parse(event.data);
 
-    if (data.type === "players_update" && onPlayersUpdate) {
+    if (data.type === "players_update") {
+      console.log("Players update: ", data.players);
       onPlayersUpdate(data.players);
     }
   };
