@@ -8,8 +8,11 @@ export function connectToLobby(wsUrl, lobbyCode, onPlayersUpdate) {
   };
 
   socket.onmessage = (event) => {
+    console.log("WS mesage: ", event.data);
+
     const data = JSON.parse(event.data);
-    if (onPlayersUpdate) {
+
+    if (data.type === "players_update" && onPlayersUpdate) {
       onPlayersUpdate(data.players);
     }
   };

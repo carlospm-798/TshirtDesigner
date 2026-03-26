@@ -12,8 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Formulario
   const form = document.querySelector(".input_form_class");
-  const users_form = document.querySelector(".users_form");
-
+  const users_list = document.querySelector(".users_list");
   // Inputs
   const uname = document.getElementById("uname");
   const lcode = document.getElementById("lcode");
@@ -65,7 +64,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   uname.addEventListener("input", validate_inputs);
-  lcode.addEventListener("input", validate_inputs);
+  lcode.addEventListener("input", () => {
+    lcode.value = lcode.value.toUpperCase();
+    validate_inputs();
+  });
 
   /* --------- SUBMIT --------- */
   form.addEventListener("submit", async (e) => {
@@ -88,7 +90,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
 
       const data = await response.json();
+      updateUsersList(data.players);
+
       lobbyCode = data.lobby_code;
+
+      lcode.value = lobbyCode;
+      enter_data_btn.disabled = true;
     }
 
     if (lobbyMode === "join") {
@@ -106,8 +113,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   /* --------- UI UPDATE --------- */
   function updateUsersList(players) {
-    console.log("Players:", players);
-    // aquí va tu usersList.appendChild(...)
+    users_list.innerHTML = "";
+
+    players.forEach(player => {
+      const li = document.createElement("li");
+      li.textContent = player.is_host ? `Your the fkin HOST:    ${player.name}` : player.name;
+
+      users_list.appendChild(li);
+    });
   }
 
 });

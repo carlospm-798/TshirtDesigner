@@ -36,3 +36,13 @@ def join_lobby(code: str, username: str):
     )
 
     return lobby, player_id
+
+def get_players_list(lobby):
+    return [
+        {
+            "id": p.id,
+            "name": p.name,
+            "is_host": p.is_host
+        }
+        for p in lobby.players.values()
+    ]
