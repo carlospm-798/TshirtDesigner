@@ -260,7 +260,7 @@ body {
     background: rgba(40, 40, 40, 0.5);
     padding: 5%;
     border-radius: 40px 40px 40px 40px;
-    opacity: 90%;
+    opacity: 99%;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 }
@@ -310,7 +310,6 @@ body {
     background: rgba(40, 40, 40, 0.5);
     padding: 5%;
     border-radius: 40px 0px 0px 0px;
-    opacity: 90%;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 }
