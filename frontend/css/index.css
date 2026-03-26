@@ -55,7 +55,7 @@ body, html {
 body {
     background-color: var(--surf-first-color);
     background-image: url('../assets/background_image.png');
-    background-size: 200% auto;     /* 👈 se ve el movimiento seguro */
+    background-size: 200% auto;
     background-repeat: repeat-x;
     animation: moveBackground 50s ease-in-out infinite;
 }

@@ -109,6 +109,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     connectToLobby(WS_URL, lobbyCode, updateUsersList);
+    show_screen(lobby);
   });
 
   /* --------- UI UPDATE --------- */

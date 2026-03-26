@@ -51,11 +51,16 @@ app.mount(
 )
 
 app.mount(
+    "/assets",
+    StaticFiles(directory=FRONTEND_DIR / "assets"),
+    name="assets"
+)
+
+app.mount(
     "/static",
     StaticFiles(directory=FRONTEND_DIR),
     name="static"
 )
-
 
 async def broadcast_players(code: str):
     if code not in connections:
