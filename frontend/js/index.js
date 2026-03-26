@@ -23,9 +23,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   let WS_URL = "";
 
   /* --------- LOAD CONFIG FIRST --------- */
-  const cfg = await fetch("/config").then(res => res.json());
-  API_URL = cfg.api_url;
-  WS_URL = cfg.ws_url;
+  const protocol = window.location.protocol === "https:" ? "wss" : "ws";
+  const host = window.location.host;
+
+  API_URL = `${window.location.origin}`;
+  WS_URL = `${protocol}://${host}`;
   // Fake IP's to test with live-server
   /*API_URL = "http://192.168.1.X:8000";
   WS_URL  = "ws://192.168.1.X:8000";*/

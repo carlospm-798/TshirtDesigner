@@ -87,8 +87,8 @@ async def index():
 @app.get("/config")
 async def config():
     return {
-        "api_url": "http://localhost:8000",
-        "ws_url": "ws://localhost:8000"
+        "api_url": "",
+        "ws_url": ""
     }
 
 
