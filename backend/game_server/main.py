@@ -16,7 +16,7 @@ from .lobby_manager import (
     get_players_list
 )
 from pydantic import BaseModel
-from typing import Dict, List
+from typing import Dict
 
 
 #   ------------------------------------------      #
