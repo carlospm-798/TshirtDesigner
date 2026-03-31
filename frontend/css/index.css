@@ -34,6 +34,10 @@
 /* ============================================================
    BASE RESET
    ============================================================ */
+.hidden {
+    display: none !important;
+}
+
 #main_window {
     min-height: 100vh;          /* Required all the screan */
     display: grid;
@@ -42,6 +46,13 @@
     padding: 2rem 1.5rem;
 }
 
+#lobby {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    padding: 2rem;
+    gap: 2rem;
+}
 
 html, body {
     height: 100%;
@@ -159,34 +170,44 @@ body {
 /* ============================================================
    LOBBY PAGE
    ============================================================ */
-.hidden {
-    display: none;
-}
 
 .lobby_header {
     color: rgb(var(--pal-4-rgb));
-    font-weight: 700;
-    font-size: 400%;
     text-shadow: 10px 5px rgb(var(--surf-1-rgb));
-    position: fixed;
-    top: 15%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    font-size: clamp(2rem, 3.5vw, 3rem);
     text-align: center;
-    margin: 0;
+}
+
+.lobby_content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+@media (max-width: 768px) {
+    .lobby_content {
+        grid-template-columns: 1fr;
+    }
 }
 
 .users_form {
     color: rgb(var(--pal-6-rgb));
-    font-size: 200%;
-    font-weight: 600;
-    position: fixed;
-    top: 25%;
-    left: 2%;
-    background: rgb(var(--surf-2-rgb) / var(--alpha-50));
-    padding: 5%;
-    border-radius: 40px;
+    background: rgb(var(--surf-2-rgb) / var(--alpha-35));
     backdrop-filter: blur(10px);
+    max-width: 100%;
+    padding: 1.5rem;
+    border-radius: 1rem;
+}
+
+.input_username_header {
+    color: rgb(var(--pal-1-rgb));
+    font-size: 1.5rem;
+}
+
+.input_lobbycode_header {
+    color: rgb(var(--pal-1-rgb));
+    font-size: 1.5rem;
 }
 
 .input_form_class {
@@ -195,25 +216,24 @@ body {
 }
 
 .input_username {
+    color: rgb(var(--pal-3-rgb));
     background-color: rgb(var(--surf-1-rgb));
-    width: 300px;
-    height: 30px;
-    border-radius: 15px;
-    color: rgb(var(--pal-1-rgb));
-    padding: 5%;
-    font-size: 60%;
-    margin: 20px 0;
+    font-size: 1.25rem;
+    margin: 1rem 0;
+    border-radius: 1rem;
+    width: 20rem;
+    height: 3rem;
+    padding: 0rem 1rem;
 }
 
 .input_username_btn {
-    cursor: pointer;
-    width: 340px;
-    padding: 10px 0;
-    background: rgb(var(--surf-2-rgb) / var(--alpha-35));
-    border-radius: 20px;
     color: rgb(var(--pal-1-rgb));
-    font-size: 90%;
-    font-weight: 800;
+    background: rgb(var(--surf-2-rgb) / var(--alpha-35));
+    cursor: pointer;
+    width: 20rem;
+    padding: 0.5rem 0;
+    border-radius: 1rem;
+    font-size: 1.5rem;
     backdrop-filter: blur(12px);
     box-shadow:
         0 0 10px rgb(255 255 255 / 0.04),
@@ -223,16 +243,12 @@ body {
 
 .users_in_lobby {
     color: rgb(var(--pal-6-rgb));
-    font-size: 150%;
-    font-weight: 600;
-    position: fixed;
-    top: 25%;
-    right: 0;
-    width: 800px;
-    height: 480px;
-    overflow-y: auto;
     background: rgb(var(--surf-2-rgb) / var(--alpha-50));
-    padding: 5%;
-    border-radius: 40px 0 0 0;
+    padding: 1rem 1rem;
+    font-size: 1.5rem;
+    border-radius: 1rem;
+
+    overflow-y: auto;
     backdrop-filter: blur(10px);
+    max-height: 60vh;
 }
