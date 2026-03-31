@@ -7,11 +7,109 @@
 import { connectToLobby } from "./socket.js?v=1.0.3";
 
 
-//  We start the script by adding a Content Loaded condition
-//  to avoid any conflic, as for example, fail while trying
-//  to load a JS action or component.
-document.addEventListener("DOMContentLoaded", async () => {
 
+//  --------------------------------------------------------------------  //
+//  ---   FUNTIONS THAT CAN BE OUT OF THE DOM CONTENT LOADED METHOD   --  //
+//  Pure Functions, Logic helpers, Fetch/API functions, and the Creation  //
+//  of DOM elements can be used here.                                     //
+//  --------------------------------------------------------------------  //
+
+
+
+/* --------- IS VALID USERNAME MANAGER --------- */
+function isValidUsername(username) {
+  //  This function returns a bool based in a correct
+  //  username without blank spaces
+  return username && !username.includes(" ");
+}
+//  -----------------------------------------------------     //
+
+
+
+/* -----  CREATE PLAYER NAME  -----*/
+function createPlayerName(name) {
+  //  This function manage the creation of player name
+  //  to refactor and clean the flow of the game.
+  const span = document.createElement("span");
+  span.textContent = name;
+  span.classList.add("player_name");
+  return span;
+}
+//  -----------------------------------------------------     //
+
+
+
+/* -----  CREATE HOST BADGE  -----*/
+function createHostBadge() {
+  //  This function manage the creation of a badge
+  //  to easily identify the HOST of the seasion.
+  const badge = document.createElement("span");
+  badge.textContent = "HOST";
+  badge.classList.add("host_badge");
+  return badge;
+}
+//  -----------------------------------------------------     //
+
+
+
+/* --------- CREATE LOBBY MANAGER --------- */
+async function createLobby(username) {
+  //  This function manage the creation of the api to create
+  //  a lobby, based in the host username.
+  const response = await fetch(`${API_URL}/create-lobby`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username })
+  });
+  return response.json();
+}
+//  -----------------------------------------------------     //
+
+
+
+/* -----  CREATE PLAYER ITEM  -----*/
+function createPlayerItem(player) {
+  //  This function manage the creation of a HTML
+  //  li element of the players, based in its
+  //  conditions as normal/host player, then it
+  //  returns a li html element.
+  const li = document.createElement("li");
+
+  if (player.is_host) {
+    //  invoke the host function badge and
+    //  append it to the li element.
+    li.appendChild(createHostBadge());
+  }
+
+  //  append the player name to the li element
+  li.appendChild(createPlayerName(player.name));
+  return li;
+}
+//  -----------------------------------------------------     //
+
+
+
+/* --------- UI UPDATE --------- */
+function updateUsersList(players) {
+  users_list.innerHTML = "";
+
+  players.forEach(player => {
+    users_list.appendChild(createPlayerItem(player));
+  });
+}
+//  -----------------------------------------------------     //
+
+
+
+//  --------------------------------------------------------  //
+//  We start the script by adding a Content Loaded condition  //
+//  to avoid any conflic, as for example, fail while trying   //
+//  to load a JS action or component.                         //
+//  --------------------------------------------------------  //
+//  Functions/elements with access with querySelector, and    //
+//  code that execute instantly when the web page is open.    //
+//  --------------------------------------------------------  //
+document.addEventListener("DOMContentLoaded", async () => {
   // Principal buttons
   const create_lobby_btn = document.getElementById("generate_lobby");
   const enter_lobby_btn  = document.getElementById("enter_lobby");
@@ -108,31 +206,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
 
-  /* --------- IS VALID USERNAME MANAGER --------- */
-  function isValidUsername(username) {
-    //  This function returns a bool based in a correct
-    //  username without blank spaces
-    return username && !username.includes(" ");
-  }
-  //  -----------------------------------------------------     //
-
-
-
-  /* --------- CREATE LOBBY MANAGER --------- */
-  async function createLobby(username) {
-    //  This function manage the creation of the api to create
-    //  a lobby, based in the host username.
-    const response = await fetch(`${API_URL}/create-lobby`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username })
-    });
-    return response.json();
-  }
-  //  -----------------------------------------------------     //
-
-
-
   /* --------- JOIN LOBBY MANAGER --------- */
   async function joinLobby(username, code) {
     //  This function manage the join in a lobby, based
@@ -183,66 +256,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     connectToLobby(WS_URL, lobbyCode, playerId, updateUsersList, handleLobbyClosed);
     show_screen(lobby);
   });
-  //  -----------------------------------------------------     //
-
-
-
-  /* -----  CREATE PLAYER NAME  -----*/
-  function createPlayerName(name) {
-    //  This function manage the creation of player name
-    //  to refactor and clean the flow of the game.
-    const span = document.createElement("span");
-    span.textContent = name;
-    span.classList.add("player_name");
-    return span;
-  }
-  //  -----------------------------------------------------     //
-
-
-
-  /* -----  CREATE HOST BADGE  -----*/
-  function createHostBadge() {
-    //  This function manage the creation of a badge
-    //  to easily identify the HOST of the seasion.
-    const badge = document.createElement("span");
-    badge.textContent = "HOST";
-    badge.classList.add("host_badge");
-    return badge;
-  }
-  //  -----------------------------------------------------     //
-
-
-
-  /* -----  CREATE PLAYER ITEM  -----*/
-  function createPlayerItem(player) {
-    //  This function manage the creation of a HTML
-    //  li element of the players, based in its
-    //  conditions as normal/host player, then it
-    //  returns a li html element.
-    const li = document.createElement("li");
-
-    if (player.is_host) {
-      //  invoke the host function badge and
-      //  append it to the li element.
-      li.appendChild(createHostBadge());
-    }
-
-    //  append the player name to the li element
-    li.appendChild(createPlayerName(player.name));
-    return li;
-  }
-  //  -----------------------------------------------------     //
-
-
-
-  /* --------- UI UPDATE --------- */
-  function updateUsersList(players) {
-    users_list.innerHTML = "";
-
-    players.forEach(player => {
-      users_list.appendChild(createPlayerItem(player));
-    });
-  }
   //  -----------------------------------------------------     //
 
 
