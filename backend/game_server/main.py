@@ -31,7 +31,8 @@ class JoinLobbyRequest(BaseModel):
     code: str
 #   ------------------------------------------      #
 '''     -   CONNECTIONS DICTIONARY   -      '''
-connections: Dict[str, List[WebSocket]] = {}
+#   code -> player_id -> websocket
+connections: Dict[str, Dict[str, WebSocket]] = {}
 
 
 '''     -   APP START AS FAST API INSTANCE   -    '''
@@ -86,11 +87,6 @@ app.mount(
 #   ----------------------------------------------------------      #
 async def broadcast_players(code: str):
 
-    if code not in connections:
-        #   Return if there's not a code in
-        #   the websocket dictionary
-        return
-
     lobby = lobbies.get(code)
     if not lobby:
         #   Return if there's not a lobby in
@@ -102,7 +98,7 @@ async def broadcast_players(code: str):
         "players": get_players_list(lobby)
     }
 
-    for ws in connections[code]:
+    for ws in connections.get(code, {}).values():
         #   await until sending a message to the lobby
         await ws.send_json(message)
 #   ----------------------------------------------------------      #
@@ -135,14 +131,23 @@ async def config():
 #   ----------------------------------------------      #
 @app.websocket("/ws/{code}")
 async def websocket_lobby(ws: WebSocket, code: str):
+
+    player_id = ws.query_params.get("player_id")
+
+    if not player_id:
+        #   Not accept the connection
+        #   Policy violation
+        await ws.close(code=1008)
+        return
+
     await ws.accept()
 
     if code not in connections:
         #   Handle the list in case that doesn't exists
-        connections[code] = []
+        connections[code] = {}
 
     #   appends the websocket in the list
-    connections[code].append(ws)
+    connections[code][player_id] = ws
 
     try:
         lobby = lobbies.get(code)
@@ -159,7 +164,29 @@ async def websocket_lobby(ws: WebSocket, code: str):
 
     except WebSocketDisconnect:
         #   disconnect the websocket in case of fails
-        connections[code].remove(ws)
+        connections[code].pop(player_id, None)
+
+        lobby = lobbies.get(code)
+        if not lobby:
+            return
+
+        #   Remove player
+        removed_player = lobby.players.pop(player_id, None)
+
+        if not removed_player:
+            return
+
+        #   Destroy the lobby if it was the host
+        if removed_player.is_host:
+            for ws in connections[code].values():
+                await ws.send_json({"type": "lobby_closed"})
+
+            connections.pop(code, None)
+            lobbies.pop(code, None)
+            return
+
+        #   update players
+        await broadcast_players(code)
 #   ----------------------------------------------      #
 
 

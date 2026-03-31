@@ -7,32 +7,25 @@
 let socket = null;
 
 /* --------- CONNECT TO LOBBY METHOD --------- */
-export function connectToLobby(wsUrl, lobbyCode, onPlayersUpdate) {
+export function connectToLobby(wsUrl, lobbyCode, playerId, onPlayersUpdate, onLobbyClosed) {
   //  This function helps to manage the WebSocket of the lobby  //
   //  connection, while adding some features as update of the   //
   //  players, or showing the state in the console log.         //
-  socket = new WebSocket(`${wsUrl}/ws/${lobbyCode}`);
-
-  socket.onopen = () => {
-    //  Shows in the console that the WebSocket is CONNECT
-    console.log("WebSocket connected");
-  };
+  socket = new WebSocket(`${wsUrl}/ws/${lobbyCode}?player_id=${playerId}`);
 
   socket.onmessage = (event) => {
     //  Shows in the console the stage of the WS mesage
-    console.log("WS message: ", event.data);
-
     const data = JSON.parse(event.data);
 
     if (data.type === "players_update") {
-      console.log("Players update: ", data.players);
+      //  update the players list
       onPlayersUpdate(data.players);
     }
-  };
 
-  socket.onclose = () => {
-    //  Notifies that the WebSocket closed in the console
-    console.log("WebSocket closed");
+    if (data.type === "lobby_closed") {
+      //  close the lobby when the HOST goes out
+      onLobbyClosed();
+    }
   };
 }
 //  -----------------------------------------------------     //

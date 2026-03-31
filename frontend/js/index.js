@@ -6,7 +6,7 @@
 //  This import take the web-sockets actions, and helps us
 //  to separate the main actions vs the socket actions, letting
 //  cleaner scripts, easily to maintain.
-import { connectToLobby } from "./socket.js";
+import { connectToLobby } from "./socket.js?v=1.0.3";
 
 
 //  We start the script by adding a Content Loaded condition
@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   //  Global variables
   let lobbyMode = null;
+  let playerId = null;
   let API_URL = "";
   let WS_URL = "";
 
@@ -135,6 +136,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
 
       const data = await response.json();
+
+      playerId = data.player_id;
       updateUsersList(data.players);
 
       lobbyCode = data.lobby_code;
@@ -152,10 +155,20 @@ document.addEventListener("DOMContentLoaded", async () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, code: lobbyCode })
       });
+
+      const data = await response.json();
+
+      playerId = data.player_id;
+      updateUsersList(data.players);
+    }
+
+    if (!playerId) {
+      console.error("PlayerId is null - WS connection blocked");
+      return;
     }
 
     //  Handle the lobby conections and updating the new interface
-    connectToLobby(WS_URL, lobbyCode, updateUsersList);
+    connectToLobby(WS_URL, lobbyCode, playerId, updateUsersList, handleLobbyClosed);
     show_screen(lobby);
   });
   //  -----------------------------------------------------     //
@@ -194,5 +207,18 @@ document.addEventListener("DOMContentLoaded", async () => {
       users_list.appendChild(li);
     });
   }
+  //  -----------------------------------------------------     //
+
+
+
+  /* --------- HANDLE LOBBY CLOSED --------- */
+  function handleLobbyClosed() {
+    //  This function alert all the members that the  //
+    //  HOST leave the game, and returns all to the   //
+    //  main windows.                                 //
+    alert("The HOST left. Lobby closed.");
+    location.reload();
+  }
+  //  -----------------------------------------------------     //
 
 });
