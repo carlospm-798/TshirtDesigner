@@ -53,10 +53,10 @@ function createHostBadge() {
 
 
 /* --------- CREATE LOBBY MANAGER --------- */
-async function createLobby(username) {
+async function createLobby(apiUrl, username) {
   //  This function manage the creation of the api to create
   //  a lobby, based in the host username.
-  const response = await fetch(`${API_URL}/create-lobby`, {
+  const response = await fetch(`${apiUrl}/create-lobby`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username })
@@ -90,11 +90,11 @@ function createPlayerItem(player) {
 
 
 /* --------- UI UPDATE --------- */
-function updateUsersList(players) {
-  users_list.innerHTML = "";
+function updateUsersList(userListElement, players) {
+  userListElement.innerHTML = "";
 
   players.forEach(player => {
-    users_list.appendChild(createPlayerItem(player));
+    userListElement.appendChild(createPlayerItem(player));
   });
 }
 //  -----------------------------------------------------     //
@@ -238,10 +238,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     //  Local variables to save code and messages
     let data; let lobbyCode;
 
-    if (lobbyCode === "create") {
+    if (lobbyMode === "create") {
       //  Check the page logic in case of HOST
-      data = await createLobby(username);
+      data = await createLobby(API_URL, username);
       lobbyCode = data.lobbyCode;
+      playerId = data.player_id;
       lcode.value = lobbyCode;
       start_game_btn.removeAttribute("hidden");
     }
@@ -250,10 +251,17 @@ document.addEventListener("DOMContentLoaded", async () => {
       //  Check the page logic and join in case of user
       lobbyCode = lcode.value.trim().toUpperCase();
       data = await joinLobby(username, lobbyCode);
+      playerId = data.player_id;
+
+      updateUsersList(users_list, data.players);
     }
 
     //  Connect/Disconnect to lobby and show the next screen stage
-    connectToLobby(WS_URL, lobbyCode, playerId, updateUsersList, handleLobbyClosed);
+    const onPlayersUpdate = (players) => {
+      updateUsersList(users_list, players);
+    };
+
+    connectToLobby(WS_URL, lobbyCode, playerId, onPlayersUpdate, handleLobbyClosed);
     show_screen(lobby);
   });
   //  -----------------------------------------------------     //
