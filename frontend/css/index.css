@@ -37,7 +37,7 @@
 #main_window {
     min-height: 100vh;          /* Required all the screan */
     display: grid;
-    grid-template-rows: auto 1fr auto;
+    grid-template-rows: auto auto auto;
     align-items: center;
     padding: 2rem 1.5rem;
 }
