@@ -56,14 +56,18 @@ def join_lobby(code: str, username: str):
     if code not in lobbies:
         return None, None
 
+    #   Getting the lobby to join
     lobby = lobbies[code]
 
+    #   Validation of non-repeatitive usernames in same lobby
     for player in lobby.players.values():
         if player.name.lower() == username.lower():
             return None, None
 
+    #   Creation of a unique uuid for players
     player_id = str(uuid.uuid4())
 
+    #   Adding the player into the player model class
     lobby.players[player_id] = Player(
         id=player_id,
         name=username,
