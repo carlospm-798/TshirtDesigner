@@ -34,6 +34,15 @@
 /* ============================================================
    BASE RESET
    ============================================================ */
+#main_window {
+    min-height: 100vh;          /* Required all the screan */
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    align-items: center;
+    padding: 2rem 1.5rem;
+}
+
+
 html, body {
     height: 100%;
     margin: 0;
@@ -61,42 +70,39 @@ body {
    ============================================================ */
 .main_header {
     color: rgb(var(--pal-4-rgb));
-    font-weight: 700;
-    font-size: 400%;
-    text-shadow: 10px 5px rgb(var(--surf-1-rgb));
-    position: fixed;
-    top: 45%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    font-size: clamp(2.2rem, 3.5vw, 4rem);
+    text-shadow: 0.5rem 0.5rem rgb(var(--surf-1-rgb));
     text-align: center;
-    margin: 0;
+    margin: 2rem 0 1rem;
+}
+
+.main_content {
+    text-align: center;
+    background-color: rgb(var(--surf-3-rgb) / var(--alpha-25));
+    border-radius: 2rem;
 }
 
 .general_description {
     color: rgb(var(--info-1-rgb));
-    position: fixed;
-    bottom: 5%;
-    left: 3%;
+    font-size: clamp(0.95rem, 2.5vh, 1.1rem);
 }
 
 .btn_lobby_group {
-    position: fixed;
-    top: 70%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     display: flex;
-    gap: 40px;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 3rem;
 }
 
 .btn_lobby {
-    cursor: pointer;
-    width: 300px;
-    padding: 20px 0;
-    background: rgb(var(--surf-2-rgb) / var(--alpha-35));
+    width: min(320px, 90vw);
+    padding: 1.2rem 0;
+    font-size: clamp(1.2rem, 4vw, 2rem);
     border-radius: 20px;
+    cursor: pointer;
+    background: rgb(var(--surf-2-rgb) / var(--alpha-35));
     color: rgb(var(--pal-1-rgb));
-    font-size: 200%;
-    font-weight: 600;
     backdrop-filter: blur(12px);
     box-shadow:
         0 0 10px rgb(255 255 255 / 0.04),
@@ -115,50 +121,39 @@ body {
    FOOTER
    ============================================================ */
 .lobby_footer {
-    position: fixed;
-    top: 65%;
-    right: 1%;
+    justify-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+
     background: rgb(var(--surf-2-rgb) / var(--alpha-50));
-    padding: 2%;
-    border-radius: 40px 0 40px 40px;
-    opacity: var(--alpha-90);
+    padding: 1.2rem 2rem;
+    border-radius: 30px;
+    max-width: min(90vw, 90rem);
     backdrop-filter: blur(10px);
 }
 
 .lobby_p_footer {
     color: rgb(var(--pal-6-rgb));
-    margin: 0;
 }
 
-.contact_data {
-    color: rgb(var(--pal-3-rgb));
-    margin-top: 0;
-}
-
-.social_text {
-    color: rgb(var(--pal-6-rgb));
-    text-decoration: none;
+.social_links {
     display: flex;
-    align-items: center;
-    margin: 10px 0;
-    font-size: 1.1rem;
+    gap: 1.2rem;
+}
+
+.social_icon_link {
+    color: rgb(var(--pal-6-rgb));
+    font-size: 1.8rem;
     opacity: 0.8;
     transition: 0.3s ease;
+    text-decoration: none;
 }
 
-.social_text:hover {
+.social_icon_link:hover {
     opacity: 1;
-    transform: translateX(6px);
-}
-
-.social-icon {
-    color: rgb(var(--pal-6-rgb));
-    margin-right: 8px;
-    transition: 0.3s ease;
-}
-
-.social_text:hover .social-icon {
-    transform: scale(1.2);
+    transform: scale(1.05);
 }
 
 /* ============================================================
