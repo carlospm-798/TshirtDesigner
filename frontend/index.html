@@ -41,23 +41,29 @@
             <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
         </div>
 
+
+
+
         <div id="lobby" class="hidden">
             <h1 class="lobby_header">Lobby menu</h1>
 
-            <div class="users_form">
-                <form class="input_form_class" autocomplete="off">
-                    <label for="uname" class="input_username_header">Username</label><br>
-                    <input type="text" id="uname" name="uname" class="input_username">
-                    <label for="lcode" class="input_lobbycode_header">Lobby Code</label><br>
-                    <input type="text" id="lcode" name="lcode" class="input_username">
-                    <button class="input_username_btn" id="input_username_btn" disabled>Enter</button>
-                </form>
+            <div class="lobby_content">
+                <div class="users_form">
+                    <form class="input_form_class" autocomplete="off">
+                        <label for="uname" class="input_username_header">Username</label><br>
+                        <input type="text" id="uname" name="uname" class="input_username">
+                        <label for="lcode" class="input_lobbycode_header">Lobby Code</label><br>
+                        <input type="text" id="lcode" name="lcode" class="input_username">
+                        <button class="input_username_btn" id="input_username_btn" disabled>Enter</button>
+                    </form>
+                </div>
+
+                <div class="users_in_lobby">
+                    <a>Users in lobby:<br></a>
+                    <ul class="users_list"></ul>
+                </div>
             </div>
 
-            <div class="users_in_lobby">
-                <a>Users in lobby:<br></a>
-                <ul class="users_list"></ul>
-            </div>
         </div>
 
         <script type="module" src="js/index.js"></script>
