@@ -1,14 +1,37 @@
+#   -----------------------------------------------------   #
+#   Carlos Paredes Márquez                                  #
+#   This script is the lobby manager, in order to keep a    #
+#   better structure of the project.                        #
+#   -----------------------------------------------------   #
+'''     -   IMPORT SECTION   -    '''
 import uuid
 import random
 import string
 from .models import Lobby, Player
 
+'''     -   GENERATING LOBBIES DICT     -   '''
 lobbies = {}
 
+
+
+#   ----------------------------------------------------    #
+#   This part manages the lobby functions of the project    #
+#   ----------------------------------------------------    #
 def generate_code():
+    #   ----------------------------------------------------------------    #
+    #   This function returns a 4 value UUID to avoid repeatitive tokens    #
+    #   along multiple servers for example.                                 #
+    #   ----------------------------------------------------------------    #
     return ''.join(random.choices(string.ascii_uppercase + string.digits, k=4))
+#   --------------------------------------------------------------------    #
+
+
 
 def create_lobby(username: str):
+    #   -----------------------------------------------------   #
+    #   This function manage the creation of a lobby, and the   #
+    #   assignation of it's HOST user.                          #
+    #   -----------------------------------------------------   #
     code        =   generate_code()
     player_id   =   str(uuid.uuid4())
 
@@ -21,8 +44,15 @@ def create_lobby(username: str):
 
     lobbies[code] = lobby
     return lobby, player_id
+#   ---------------------------------------------------------   #
+
+
 
 def join_lobby(code: str, username: str):
+    #   -----------------------------------------------------   #
+    #   This function let different users to join into a same   #
+    #   lobby, and it assing every user an UUID token.          #
+    #   -----------------------------------------------------   #
     if code not in lobbies:
         return None, None
 
@@ -36,8 +66,14 @@ def join_lobby(code: str, username: str):
     )
 
     return lobby, player_id
+#   ---------------------------------------------------------   #
+
+
 
 def get_players_list(lobby):
+    #   -------------------------------------------------------     #
+    #   This function returns a list of the memebers of a lobby     #
+    #   -------------------------------------------------------     #
     return [
         {
             "id": p.id,
@@ -46,3 +82,4 @@ def get_players_list(lobby):
         }
         for p in lobby.players.values()
     ]
+#   -----------------------------------------------------------     #
