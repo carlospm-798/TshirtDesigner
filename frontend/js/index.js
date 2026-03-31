@@ -241,7 +241,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (lobbyMode === "create") {
       //  Check the page logic in case of HOST
       data = await createLobby(API_URL, username);
-      lobbyCode = data.lobbyCode;
+      lobbyCode = data.lobby_code;
       playerId = data.player_id;
       lcode.value = lobbyCode;
       start_game_btn.removeAttribute("hidden");
