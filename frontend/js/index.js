@@ -250,10 +250,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (lobbyMode === "join") {
       //  Check the page logic and join in case of user
       lobbyCode = lcode.value.trim().toUpperCase();
-      data = await joinLobby(username, lobbyCode);
-      playerId = data.player_id;
 
-      updateUsersList(users_list, data.players);
+      try {
+        data = await joinLobby(username, lobbyCode);
+        playerId = data.player_id;
+        updateUsersList(users_list, data.players);
+      } catch (err) {
+        alert("Invalid lobby code or username already taken");
+        return;
+      }
     }
 
     //  Connect/Disconnect to lobby and show the next screen stage
