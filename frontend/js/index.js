@@ -120,7 +120,25 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     players.forEach(player => {
       const li = document.createElement("li");
-      li.textContent = player.is_host ? `HOST ->    :${player.name}` : player.name;
+
+      if (player.is_host) {
+        const badge = document.createElement("span");
+        badge.textContent = "HOST";
+        badge.classList.add("host_badge");
+
+        const name = document.createElement("span");
+        name.textContent = player.name;
+        name.classList.add("player_name");
+
+        li.appendChild(badge);
+        li.appendChild(name);
+      } else {
+
+        const name = document.createElement("span");
+        name.textContent = player.name;
+        name.classList.add("player_name");
+        li.appendChild(name);
+      }
 
       users_list.appendChild(li);
     });
