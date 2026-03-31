@@ -1,3 +1,9 @@
+#   -----------------------------------------------------   #
+#   Carlos Paredes Márquez                                  #
+#   This script is the main file to start the server game   #
+#   it manages the fast api methods, the websockets, etc.   #
+#   -----------------------------------------------------   #
+'''     -   IMPORT SECTION   -    '''
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -13,20 +19,26 @@ from pydantic import BaseModel
 from typing import Dict, List
 
 
-
+#   ------------------------------------------      #
+#   Starting the base model requests classes        #
+#   to manage the POST methods in the project.      #
+#   ------------------------------------------      #
 class CreateLobbyRequest(BaseModel):
     username: str
 
 class JoinLobbyRequest(BaseModel):
     username: str
     code: str
-
+#   ------------------------------------------      #
+'''     -   CONNECTIONS DICTIONARY   -      '''
 connections: Dict[str, List[WebSocket]] = {}
 
 
+'''     -   APP START AS FAST API INSTANCE   -    '''
 app = FastAPI()
 
-# --- CORS (útil para dev) ---
+
+'''     -   CORS STARTING TO AVOID CONFLICTS    -   '''
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -34,7 +46,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# --- Paths ---
+#   ---------------------------------------------------     #
+#   This part handles the static components of the UI       #
+#   to avoid conflics while using fast API methods, and     #
+#   web socket methods in the same project.                 #
+#   ---------------------------------------------------     #
 BASE_DIR = Path(__file__).resolve().parent.parent
 FRONTEND_DIR = BASE_DIR / "../frontend"
 
@@ -61,13 +77,24 @@ app.mount(
     StaticFiles(directory=FRONTEND_DIR),
     name="static"
 )
+#   ---------------------------------------------------     #
 
+
+
+#   ----------------------------------------------------------      #
+#   This part manage the async functions all over the project.      #
+#   ----------------------------------------------------------      #
 async def broadcast_players(code: str):
+
     if code not in connections:
+        #   Return if there's not a code in
+        #   the websocket dictionary
         return
 
     lobby = lobbies.get(code)
     if not lobby:
+        #   Return if there's not a lobby in
+        #   the websocket dictionary
         return
 
     message = {
@@ -76,30 +103,45 @@ async def broadcast_players(code: str):
     }
 
     for ws in connections[code]:
+        #   await until sending a message to the lobby
         await ws.send_json(message)
+#   ----------------------------------------------------------      #
 
 
+
+#   ---------------------   #
+#   Initial configuration   #
+#   ---------------------   #
 @app.get("/")
 async def index():
+    #   Gets the frontend direction
     return FileResponse(FRONTEND_DIR / "index.html")
-
+#   ------------------------------------------------    #
 
 @app.get("/config")
 async def config():
+    #   Returns the api/ws url
     return {
         "api_url": "",
         "ws_url": ""
     }
+#   ------------------------------------------------    #
 
 
 
+#   ----------------------------------------------      #
+#   Lobby websocket, this part handles the players      #
+#   update, as the list of members in the fron-end      #
+#   ----------------------------------------------      #
 @app.websocket("/ws/{code}")
 async def websocket_lobby(ws: WebSocket, code: str):
     await ws.accept()
 
     if code not in connections:
+        #   Handle the list in case that doesn't exists
         connections[code] = []
 
+    #   appends the websocket in the list
     connections[code].append(ws)
 
     try:
@@ -116,9 +158,15 @@ async def websocket_lobby(ws: WebSocket, code: str):
             await ws.receive_text()
 
     except WebSocketDisconnect:
+        #   disconnect the websocket in case of fails
         connections[code].remove(ws)
+#   ----------------------------------------------      #
 
 
+
+#   --------------------------------------------    #
+#   Back-end manage of the creation of the lobby    #
+#   --------------------------------------------    #
 @app.post("/create-lobby")
 async def create_lobby_endpoint(req: CreateLobbyRequest):
     lobby, player_id = create_lobby(req.username)
@@ -130,8 +178,13 @@ async def create_lobby_endpoint(req: CreateLobbyRequest):
         "player_id": player_id,
         "players": get_players_list(lobby)
     }
+#   --------------------------------------------    #
 
 
+
+#   --------------------------------------------    #
+#   Back-end manage of the joining of a lobby       #
+#   --------------------------------------------    #
 @app.post("/join-lobby")
 async def join_lobby_endpoint(req: JoinLobbyRequest):
     lobby, player_id = join_lobby(req.code, req.username)
@@ -146,3 +199,4 @@ async def join_lobby_endpoint(req: JoinLobbyRequest):
         "player_id": player_id,
         "players": get_players_list(lobby)
     }
+#   --------------------------------------------    #
