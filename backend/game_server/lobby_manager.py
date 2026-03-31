@@ -56,8 +56,13 @@ def join_lobby(code: str, username: str):
     if code not in lobbies:
         return None, None
 
-    player_id = str(uuid.uuid4())
     lobby = lobbies[code]
+
+    for player in lobby.players.values():
+        if player.name.lower() == username.lower():
+            return None, None
+
+    player_id = str(uuid.uuid4())
 
     lobby.players[player_id] = Player(
         id=player_id,
