@@ -176,6 +176,7 @@ body {
     text-shadow: 10px 5px rgb(var(--surf-1-rgb));
     font-size: clamp(2rem, 3.5vw, 3rem);
     text-align: center;
+    background: rgb(var(--surf-2-rgb)/var(--alpha-25));
 }
 
 .lobby_content {

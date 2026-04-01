@@ -146,7 +146,38 @@ document.addEventListener("DOMContentLoaded", async () => {
   const host = window.location.host;
   API_URL = `${window.location.origin}`;
   WS_URL = `${protocol}://${host}`;
+  //  EMULATION OF FUNCTIONALITIES FOR DEVELOPMENT
+  const DEV_MODE = true;
   //  --------------------------------------------------------------- //
+
+
+
+  /* --------- DEVELOPER MANAGER --------- */
+  if (DEV_MODE) {
+    //  This validation helps to keep developing the next
+    //  stages, in order to can work with the HTML and CSS
+    //  instead of working manually with the server on.
+    //  Setting the lobby mode
+    lobbyMode = "create";
+    //  Show lobby
+    show_screen(lobby);
+    //  Simulate players
+    updateUsersList(users_list, [
+      { name: "Host", is_host: true },
+      { name: "Jake", is_host: false },
+      { name: "User", is_host: false}
+    ]);
+    //  Simulate valid lobby
+    start_game_btn.hidden = false;
+    start_game_btn.disabled = false;
+    //  Enable exit button
+    exit_game_btn.disabled = false;
+    //  Block inputs as the lobby is done
+    uname.disabled = true;
+    lcode.disabled = true;
+    enter_data_btn.disabled = true;
+  }
+  /* ----------------------------------------------------------  */
 
 
 
