@@ -196,10 +196,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     //  This function manage the create lobby actions of The    //
     //  start game mode, in the drawn menu.                     //
     show_screen(game_drawn);
+    alert("button working");
     /*  TO DO:
-          This button generates another websocket
-          insted of shows the new frame, let's check
-          whats goin on.  */
+          - Update all users screan when start game is clicked.
+          - There's a bug, if a user click again the Enter button.
+    */
   };
   //  -----------------------------------------------------     //
 
