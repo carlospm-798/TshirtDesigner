@@ -4,7 +4,7 @@
 //  This import take the web-sockets actions, and helps us
 //  to separate the main actions vs the socket actions, letting
 //  cleaner scripts, easily to maintain.
-import { connectToLobby } from "./socket.js?v=1.0.3";
+import { connectToLobby, disconnectFromLobby } from "./socket.js?v=1.0.5";
 
 
 
@@ -134,6 +134,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const uname = document.getElementById("uname");
   const lcode = document.getElementById("lcode");
   const enter_data_btn = document.getElementById("input_username_btn");
+  const exit_game_btn = document.getElementById("exit_lobby_btn");
   const start_game_btn = document.getElementById("start_game_btn");
   //  Global variables
   let lobbyMode = null;
@@ -191,6 +192,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
 
+  /* --------- EXIT LOBBY BUTTON MANAGER --------- */
+  exit_game_btn.onclick = () => {
+    //  This function manage the exit lobby action            //
+    //  to avoid user conflics while using the interface.     //
+    disconnectFromLobby();
+    resetLobbyState();
+  };
+  //  -----------------------------------------------------     //
+
+
   /* --------- START GAME BUTTON MANAGER --------- */
   start_game_btn.onclick = () => {
     //  This function manage the create lobby actions of The    //
@@ -202,6 +213,30 @@ document.addEventListener("DOMContentLoaded", async () => {
           - There's a bug, if a user click again the Enter button.
     */
   };
+  //  -----------------------------------------------------     //
+
+
+
+  /* --------- RESET LOBBY CONDITION --------- */
+  function resetLobbyState() {
+    //  This function reset the state of the lobby
+    //  when an user or host wants to leave the game.
+    lobbyMode = null;
+    playerId = null;
+    //  clean the user list
+    users_list.innerHTML = "";
+    //  reset the inputs
+    uname.value = "";
+    lcode.value = "";
+    uname.disabled = false;
+    lcode.disabled = false;
+    enter_data_btn.disabled = true;
+    //  Ocult the special buttons
+    start_game_btn.hidden = true;
+    start_game_btn.disabled = true;
+    //  show main window
+    show_screen(main_window);
+  }
   //  -----------------------------------------------------     //
 
 
