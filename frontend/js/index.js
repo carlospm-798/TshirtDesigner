@@ -206,6 +206,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
 
+  /* --------- LOCK LOBBY BUTTON CONDITION --------- */
+  function lockLobbyEntry() {
+    //  This function locks the main forms of the
+    //  lobby, to avoid stable issues when user joins
+    //  a lobby.
+    uname.disabled = true;
+    lcode.disabled = true;
+    enter_data_btn.disabled = true;
+  }
+  //  -----------------------------------------------------     //
+
+
+
   /* ---------------- VALIDATION ---------------- */
   function validate_inputs() {
     //  This function check that all the inputs are being       //
@@ -299,6 +312,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     };
 
+    //  lock the lobby entry button to avoid conflics. Then it connects to
+    //  the lobby, and shows the lobby screen.
+    lockLobbyEntry();
     connectToLobby(WS_URL, lobbyCode, playerId, onPlayersUpdate, handleLobbyClosed);
     show_screen(lobby);
   });
