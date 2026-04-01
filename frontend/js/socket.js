@@ -32,6 +32,20 @@ export function connectToLobby(wsUrl, lobbyCode, playerId, onPlayersUpdate, onLo
 
 
 
+/* --------- DISCONNECT LOBBY METHOD --------- */
+export function disconnectFromLobby() {
+  //  This function helps to manage the WebSocket of the lobby  //
+  //  disconnection, when the users or host want to leave.      //
+  if (socket) {
+    console.log("Closing WebSocket from client");
+    socket.close();
+    socket = null;
+  }
+}
+//  -----------------------------------------------------     //
+
+
+
 /* --------- SEND MESSAGE METHOD --------- */
 export function sendMessage(type, payload) {
   //  This function sends a message to the WebSocket      //
