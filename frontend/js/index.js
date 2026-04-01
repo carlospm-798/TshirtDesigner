@@ -101,6 +101,16 @@ function updateUsersList(userListElement, players) {
 
 
 
+/* --------- VALID LOBBY CONDITION --------- */
+function isValidLobby(players) {
+  //  This function validates the minimum number
+  //  of players in the game.
+  return players.length >= 3;
+}
+//  -----------------------------------------------------     //
+
+
+
 //  --------------------------------------------------------  //
 //  We start the script by adding a Content Loaded condition  //
 //  to avoid any conflic, as for example, fail while trying   //
@@ -115,7 +125,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   const enter_lobby_btn  = document.getElementById("enter_lobby");
   // Screens
   const main_window = document.getElementById("main_window");
-  const lobby       = document.getElementById("lobby");
+  const lobby = document.getElementById("lobby");
+  const game_drawn = document.getElementById("game_drawn");
   // Forms
   const form = document.querySelector(".input_form_class");
   const users_list = document.querySelector(".users_list");
@@ -145,6 +156,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     //  that was sended as the parameter.                         //
     main_window.classList.add("hidden");
     lobby.classList.add("hidden");
+    game_drawn.classList.add("hidden");
     screen.classList.remove("hidden");
   }
   /* ----------------------------------------------------------  */
@@ -154,7 +166,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   /* --------- CREATE LOBBY BUTTON MANAGER --------- */
   create_lobby_btn.onclick = () => {
     //  This function manage the create lobby actions of The    //
-    //  main screan, by lock the lobby code form, to show the   //
+    //  main screen, by lock the lobby code form, to show the   //
     //  lobby code for the users in that same space.            //
     lobbyMode = "create";
     show_screen(lobby);
@@ -168,12 +180,26 @@ document.addEventListener("DOMContentLoaded", async () => {
   /* --------- ENTER LOBBY BUTTON MANAGER --------- */
   enter_lobby_btn.onclick = () => {
     //  This function manage the enter lobby actions of The     //
-    //  main screan, by unlock the lobby code form, to input    //
+    //  main screen, by unlock the lobby code form, to input    //
     //  the lobby code for the users in that space.             //
     lobbyMode = "join";
     show_screen(lobby);
     lcode.disabled = false;
     lcode.value = "";
+  };
+  //  -----------------------------------------------------     //
+
+
+
+  /* --------- START GAME BUTTON MANAGER --------- */
+  start_game_btn.onclick = () => {
+    //  This function manage the create lobby actions of The    //
+    //  start game mode, in the drawn menu.                     //
+    show_screen(game_drawn);
+    /*  TO DO:
+          This button generates another websocket
+          insted of shows the new frame, let's check
+          whats goin on.  */
   };
   //  -----------------------------------------------------     //
 
@@ -264,6 +290,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     //  Connect/Disconnect to lobby and show the next screen stage
     const onPlayersUpdate = (players) => {
       updateUsersList(users_list, players);
+
+      //  Validate the button when all the players are available
+      if (isValidLobby(players) && lobbyMode === "create") {
+        start_game_btn.hidden = false;
+        start_game_btn.disabled = false;
+      }
     };
 
     connectToLobby(WS_URL, lobbyCode, playerId, onPlayersUpdate, handleLobbyClosed);
