@@ -39,7 +39,7 @@
 }
 
 #main_window {
-    min-height: 100vh;          /* Required all the screan */
+    min-height: 90vh;          /* Required all the screan */
     display: grid;
     grid-template-rows: auto auto auto;
     align-items: center;
@@ -47,7 +47,7 @@
 }
 
 #lobby {
-    min-height: 100vh;
+    min-height: 90vh;
     display: grid;
     grid-template-rows: auto 1fr;
     padding: 2rem;
