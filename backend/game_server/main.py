@@ -163,22 +163,27 @@ async def websocket_lobby(ws: WebSocket, code: str):
             await ws.receive_text()
 
     except WebSocketDisconnect:
-        #   disconnect the websocket in case of fails
-        connections[code].pop(player_id, None)
 
+        #   Shows a print in the terminal
+        print(f'Player {player_id} disconnected from lobby {code}')
+        #   disconnect the websocket in case of fails
+        lobby_connections = connections.get(code)
+        if lobby_connections:
+            connections[code].pop(player_id, None)
+
+        #   return if there's no lobby
         lobby = lobbies.get(code)
         if not lobby:
             return
 
         #   Remove player
         removed_player = lobby.players.pop(player_id, None)
-
         if not removed_player:
             return
 
-        #   Destroy the lobby if it was the host
+        #   Destroy the lobby if the HOST leaves
         if removed_player.is_host:
-            for ws in connections[code].values():
+            for ws in connections[code].values() if lobby_connections else []:
                 await ws.send_json({"type": "lobby_closed"})
 
             connections.pop(code, None)
