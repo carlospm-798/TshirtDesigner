@@ -9,3 +9,5 @@ defined time, based in users drawns and phrases.
 
 By now, this project is basically starting, as you might see, there's only a Menu, and a Lobby page, both
 in the same HTML, but while refreshing actions to hidde and un-hidde HTML divs.
+
+Testing Push commands...
